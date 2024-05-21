@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Калкулатор за Земя</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+    }
+    #calculator {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin: 10px auto;
+      max-width: 350px; /* Limit width for responsiveness */
+
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    input,
+    select {
+      width: 100%;
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+    button {
+      margin-top: 10px;
+      padding: 15px 25px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+    <div id="calculator">
+    <h1 id="title">Калкулатор за Земя</h1>
+    <label for="total-area">Обща Площ на Земята:</label>
+    <input type="number" id="total-area" required>
+    <br>
+    <label for="area-unit-in">Входна Единица:</label>
+    <select id="area-unit-in">
+      <option value="sq-m">Квадратни Метри (кв. м)</option>
+      <option value="decares">Декари (da)</option>
+    </select>
+    <br>
+    <label for="num-parts-total">Общо Брой Части:</label>
+    <input type="number" id="num-parts-total" required min="1">
+    <br>
+    <label for="part-number">Вашите Части:</label>
+    <input type="number" id="part-number" required min="1">
+    <br>
+    <label for="area-unit-out">Изходна Единица:</label>
+    <select id="area-unit-out">
+      <option value="sq-m">Квадратни Метри (кв. м)</option>
+      <option value="decares">Декари (da)</option>
+    </select>
+    <br>
+    <button onclick="calculateArea()">Изчисли</button>
+  </div>
+  <script>
+    // JavaScript code (refer to the following section)
+    // Define the calculateArea function outside the script tag
+function calculateArea() {
+  const totalArea = parseFloat(document.getElementById("total-area").value);
+  const inputUnit = document.getElementById("area-unit-in").value;
+
+  // Convert total area to square meters if necessary
+  let totalAreaSqM = totalArea;
+  if (inputUnit === "decares") {
+    totalAreaSqM = totalArea * 1000;
+  }
+
+  const numPartsTotal = parseInt(document.getElementById("num-parts-total").value);
+  const partNumber = parseInt(document.getElementById("part-number").value);
+
+  // Validate part number within total parts (same logic)
+  if (partNumber > numPartsTotal) {
+    alert("Посоченият номер на частта надвишава общия брой части!");
+    return;
+  }
+
+  // No ratio calculation needed, use part number directly
+  const yourPartAreaSqM = totalAreaSqM / numPartsTotal; 
+
+  const outputUnit = document.getElementById("area-unit-out").value;
+
+  // Convert your part area to output unit if necessary
+  let yourPartAreaOutput = yourPartAreaSqM;
+  if (outputUnit === "decares") {
+    yourPartAreaOutput = yourPartAreaSqM / 1000;
+  }
+
+  // Display results using alert
+  const resultText = `Площ на Вашата Част: ${yourPartAreaOutput.toFixed(2)} ${outputUnit=="sq-m"?"кв. метри":"декар/а"}`;
+  alert(resultText);
+}
+
+  </script>
+</body>
+</html>
